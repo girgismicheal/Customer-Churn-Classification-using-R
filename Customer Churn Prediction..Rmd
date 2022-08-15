@@ -1,71 +1,80 @@
 ```{r}
 # install packages just of the first run
-# install.packages("caret")
-# install.packages("e1071")
-# install.packages("ggplot2")
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("corrplot")
-# install.packages("readr")
-# install.packages("MASS")
-# install.packages("rms")
-# install.packages("ROCR")
-# install.packages("pROC")
-# install.packages("randomForest")
-# install.packages("ggpubr")
-# install.packages("gplots")
-# install.packages("xgboost")
-# 
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("corrplot")
-# install.packages("readr")
+set.seed(42)
 
-# install.packages('reticulate')
-# install.packages('keras')
+install.packages("caret")
+install.packages("e1071")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("readr")
+install.packages("corrplot")
+install.packages("ggplot2")
+install.packages("MASS")
+install.packages("rms")
+install.packages("ggpubr")
+install.packages("gplots")
+# Random Forest
+install.packages("randomForest")
+
+# Decision tree
+install.packages("rpart")
+install.packages("rpart.plot")
+
+# Xgboost
+install.packages("xgboost")
+
+# Neural Network
+install.packages("tensorflow")
+install_tensorflow()
+install.packages('reticulate')
+install.packages('keras')
+
+#ROC curve
+install.packages("ROCR")
+install.packages("pROC")
 ```
-
 ```{r}
-#load libraries
-# insall those libraries at the first run
-# library(dplyr)
-# library(corrplot)
-# library(readr)
-# library(dplyr)
-# library(tidyr)
-
-library(reshape2)
-library(plyr)
-library(scales)
 library(dplyr)
-library(corrplot)
-library(readr)
+library(caret)
+library(e1071)
 library(dplyr)
 library(tidyr)
 library(tidyverse)
-library(gplots)
+library(readr)
 library(corrplot)
 library(ggplot2)
-library(rms)
 library(MASS)
-library(e1071)
-library(ROCR)
-library(pROC)
+library(rms)
+library(ggpubr)
+library(gplots)
+library(reshape2)
+library(plyr)
+library(scales)
+
+# Random Forest
+library(randomForest)
+
+# Decision tree
 library(rpart)
 library(rpart.plot)
-library(randomForest)
-library(ggpubr)
-library(xgboost)
-library(caret)
-set.seed(42)
 
+# Xgboost
+library(xgboost)
+
+# Neural Network
+library('tensorflow')
 library(reticulate)
 library(keras)
+
+#ROC curve
+library(ROCR)
+library(pROC)
 ```
+
 
 ```{r}
 # Load Our data
-churn.data <- read.csv("D:/Fandumental Datascience Assignment 2/Churn Dataset.csv", na.strings= '')
+churn.data <- read.csv("Churn Dataset.csv", na.strings= '')
 churn.data
 ```
 
@@ -113,7 +122,8 @@ cat("\nThe number of raw after ",nrow(data))
 ### Transfer the tenure from number of months to years
 ```{r}
 table(data$tenure)
-
+```
+```{r}
 data %>%
   mutate(tenure_year = case_when(tenure <= 12 ~ "0-1 year",
                                  tenure > 12 & tenure <= 24 ~ "1-2 years",
