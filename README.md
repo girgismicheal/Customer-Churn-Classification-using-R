@@ -2,7 +2,28 @@
 ![Customer-churn-Image](Image/Customer-Churn-Rate.png)
 
 ## Overview
-Customer churn rate is an important performance metric in the Telecoms industry due to the highly competitive markets. The churn rate enables companies to understand why their customers are leaving. You are hereby provided with the churn dataset containing randomly collected data from a telecom company’s database. Develop ML models that can help the retention team predict high risk churn customers before they leave
+Customer churn rate is an important performance metric in the Telecoms industry
+due to the highly competitive markets. The churn rate enables 
+companies to understand why their customers are leaving. You 
+are hereby provided with the churn dataset containing randomly collected 
+data from a telecom company’s database. Develop ML models that can help 
+the retention team predict high-risk churn customers before they leave
+
+## Table of Contents
+- [Usage](#Usage)
+  - [Install](#Install)
+  - [Import the project file](#Import-the-project-file)
+  - [Train on the environment](#Train-on-the-environment)
+  - [Train and Evaluate](#Train-and-Evaluate)
+    - [Train and Evaluate on the Taxi-v3 environment](#Train-and-Evaluate-on-the-Taxi-v3-environment)
+    - [Train and Evaluate on the FrozenLake-v1 environment](#Train-and-Evaluate-on-the-FrozenLake-v1-environment)
+  - [Tuning the Parameters using Decay Over Episodes Technique](#Tuning-the-Parameters-using-Decay-Over-Episodes-Technique)
+    - [Tuning on the Taxi-v3 environment](#Tuning-on-the-Taxi-v3-environment)
+    - [Tuning on the FrozenLake-v1 environment](#Tuning-on-the-FrozenLake-v1-environment)
+  - [Use the Grid Search](#Use-the-Grid-Search)
+    - [On the Taxi-v3 environment](#On-the-Taxi-v3-environment)
+    - [On the FrozenLake-v1 environment](#On-the-FrozenLake-v1-environment)
+
 
 ## Project structure
 ### All the required library
@@ -85,7 +106,7 @@ churn.data <- read.csv("Churn Dataset.csv", na.strings= '')
 churn.data
 ```
 ![Customer-churn-Image](Image/Screenshot_1.png)
-### Check the correction
+### Check the correlation
 
 > #### The scatterplot matrix
 > ```{r}
@@ -126,8 +147,8 @@ churn.data
 > cat("\nThe number of duplicates in the data ",sum(duplicated(data)))
 > cat("\nThe number of nulls in the data ", sum(is.na(data)))
 > ```
-> - The number of duplicates in the data  22
-> - The number of nulls in the data  11
+> - The number of duplicates in the data is 22
+> - The number of nulls in the data is 11
 > #### Remove Nulls and Duplicates
 > ```{r}
 > data <- na.exclude(data) 
@@ -136,9 +157,9 @@ churn.data
 > cat("\nThe number of raws before ",nrow(churn.data))
 > cat("\nThe number of raw after ",nrow(data))
 > ```
-> - The number of raws before  7043
-> - The number of raw after  7010
-> #### Transfer the tenure from number of months to years
+> - The number of rows before is  7043
+> - The number of row after is 7010
+> #### Transfer the tenure from the number of months to years
 > 
 > ```{r}
 > table(data$tenure)
@@ -185,9 +206,9 @@ rpart.plot(rpart(formula = Churn ~., data = train_data,
                      method = "class", parms = list(split = "gini")), extra = 100)
 ```
 ![Customer-churn-Image](Image/Screenshot_9.png)<br>
-> - After fit and plotting the decision tree, the result shows:
->   - If the customer contract one or two year then the prediction would be No churn
->   - Else we would check the internet service if has DSL or No then No churn.
+> - After fitting and plotting the decision tree, the result shows:
+>   - If the customer contract is one or two years then the prediction would be No churn
+>   - Else we would check the internet service if the customer has DSL or No then-No churn.
 >   - Else we check the TotalCharges if greater than 1317 then no churn.
 >   - Else the prediction would be churn.
 #### Using different splitting strategies
@@ -197,7 +218,7 @@ DT_Model_gini <- rpart(formula = Churn ~., data = train_data, method = "class", 
 ```
 ###### Confusion Matrix And ROC Curve
 ```{r}
-#For the Training Set
+# For the Training Set
 train_pred_gini = predict(DT_Model_gini, data = train_data, type = "class") 
 train_prob_gini = predict(DT_Model_gini, data = train_data, type = "prob")
 
@@ -211,7 +232,7 @@ Confusion Matrix           |  ROC Curve
 ![Customer-churn-Image](Image/Screenshot_10.png)|  ![Customer-churn-Image](Image/Screenshot_11.png)
 
 ```{r}
-#For the Test Set
+# For the Test Set
 test_pred_gini = predict(DT_Model_gini, newdata= test_data, type = "class")
 test_prob_gini = predict(DT_Model_gini, newdata = test_data, type = "prob")
 
@@ -259,7 +280,7 @@ Confusion Matrix             |  ROC Curve
 ![Customer-churn-Image](Image/Screenshot_16.png)|  ![Customer-churn-Image](Image/Screenshot_17.png)
 - Conclusion: There is no difference with changing the splitting strategies only.
 
-### Prune the Decision Tree by reduce the max_level from 3 to 2
+#### Prune the Decision Tree by reducing the max_level from 3 to 2
 ```{r}
 set.seed(42)
 DT_Model_information = rpart(formula = Churn ~., data = train_data, 
@@ -295,7 +316,7 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_20.png)|  ![Customer-churn-Image](Image/Screenshot_21.png)
 
-### try Post-pruning on the trained model
+#### Try Post-pruning on the trained model
 ```{r}
 DT <- rpart(Churn ~ ., data = train_data,method = "class", parms = list(split = "gini"))
 Pruned_DT <- prune(DT,cp = .1)
@@ -308,8 +329,8 @@ print(confusionMatrix(table(test_data$Churn,pruned_result),mode = "everything"))
 **Confusion Matrix**
 ![Customer-churn-Image](Image/Screenshot_22.png)
 
-### try Pre-pruning by changing the c value in the Decision Tree
-#### Control the Decision Tree by changing the c value to .1
+### Try Pre-pruning by changing the Cp value in the Decision Tree
+##### Control the Decision Tree by changing the c value to .1
 ```{r}
 set.seed(42)
 DT_Model_cp1 <- rpart(formula = Churn ~., data = train_data, 
@@ -344,9 +365,9 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_25.png)|![Customer-churn-Image](Image/Screenshot_26.png)
 
-#### Control the Decision Tree by changing the c value to .01
+#### Control the Decision Tree by changing the Cp value to .01
 ```{r}
-# the Decision Tree by changing the c value [.1]
+# the Decision Tree by changing the Cp value [.1]
 DT_Model_cp2 <- rpart(formula = Churn ~., data = train_data, 
                      method = "class", parms = list(split = "gini"), control = rpart.control(c  = .01))
 ```
@@ -381,7 +402,7 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_29.png)|![Customer-churn-Image](Image/Screenshot_30.png)
 
-#### Control the Decision Tree by changing the c value to .001
+#### Control the Decision Tree by changing the Cp value to .001
 ```{r}
 DT_Model_cp3 = rpart(formula = Churn ~., data = train_data, 
                      method = "class", parms = list(split = "gini"), control = rpart.control(c  = .001))
@@ -415,10 +436,9 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_33.png)|![Customer-churn-Image](Image/Screenshot_34.png)
 
-### Decision Conclusion
+#### Decision Tree Conclusion
 
-
-**Different splitting strategies**
+##### **Different splitting strategies**
 
 Parameters	| Train accuracy	 | Test accuracy
 :-------------------------:|:---------------:|:-------------------------:
@@ -426,25 +446,25 @@ Split = ”gini”	|     0.7894	     |0.7905
 Split = ”information”|    	0.7894	     | 0.7905
 - There is no difference with changing the splitting strategies only.
 
-Change the cp
+##### Change the cp
 
 Parameters	| Train accuracy	 | Test accuracy
 :-------------------------:|:---------------:|:-------------------------:
 cp = 0 |	0.8619|	0.7517
 cp = 0.01 (default)|	0.7894|	0.7905
 cp = 0.001|	0.8493	|0.7823
-- Cp = 0 suffer toghly from overfitting
-- 
-Change the maxdepth
+- Cp = 0 suffer toughly from over-fitting
+
+##### Change the maxdepth
 
 Parameters	| Train accuracy	 | Test accuracy
 :-------------------------:|:---------------:|:-------------------------:
 maxdepth = 3 (default)|	0.7894	|0.7905
 maxdepth = 2|	0.7603|	0.7694
 
-- Pruning reduces the complexity of the tree and reduces the overfitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
+- Pruning reduces the complexity of the tree and reduces the over-fitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
 
-## xgboost
+## Xgboost
 ```{r}
 set.seed(42)
 xgb <- xgboost(data =as.matrix(subset(sapply(train_data, unclass), select = -Churn)) , label = train_actual, max_depth = 3, nround=70)
@@ -682,94 +702,6 @@ From the above results we can conclude increasing the dropout rate has the follo
   - High drop rate may cause reduce in the overall accuracies
 
 
-## Conclusion
-### Decision tree
-
-[//]: # (Using different splitting strategies)
-
-[//]: # ()
-[//]: # (Parameters	| Train accuracy	 | Test accuracy)
-
-[//]: # (:-------------------------:|:---------------:|:-------------------------:)
-
-[//]: # (Split = ”gini”	|     0.7894	     |0.7905)
-
-[//]: # (Split = ”information”|    	0.7894	     | 0.7905)
-
-[//]: # (- There is no difference with changing the splitting strategies only.)
-
-[//]: # ()
-[//]: # (Change the cp)
-
-[//]: # ()
-[//]: # (Parameters	| Train accuracy	 | Test accuracy)
-
-[//]: # (:-------------------------:|:---------------:|:-------------------------:)
-
-[//]: # (cp = 0 |	0.8619|	0.7517)
-
-[//]: # (cp = 0.01 &#40;default&#41;|	0.7894|	0.7905)
-
-[//]: # (cp = 0.001|	0.8493	|0.7823)
-
-[//]: # ()
-[//]: # (Change the maxdepth)
-
-[//]: # ()
-[//]: # (Parameters	| Train accuracy	 | Test accuracy)
-
-[//]: # (:-------------------------:|:---------------:|:-------------------------:)
-
-[//]: # (maxdepth = 3 &#40;default&#41;|	0.7894	|0.7905)
-
-[//]: # (maxdepth = 2|	0.7603|	0.7694)
-
-[//]: # (- Pruning reduces the complexity of the tree and reduces the overfitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.)
-
-[//]: # (### Xgboost)
-
-[//]: # (The XGBoost training accuracy is 84.06% and the testing accuracy is 80.07%, which is not a huge difference in the accuracy so we can say it’s slight overfitting. and the sign of overfitting there is 4% difference between the train and testing accuracies.)
-
-[//]: # (### DNN)
-
-[//]: # ()
-[//]: # (#### Table of results due to changing the activation function)
-
-[//]: # ( Parameters	  |    Test accuracy    )
-
-[//]: # (:------------:|:-------------------:)
-
-[//]: # (Relu  | 0.7966)
-
-[//]: # (Selu  | 0.7898)
-
-[//]: # (Tanh  | 0.7796)
-
-[//]: # (-	Relu has the highest accuracy, but it’s not a big difference. Also tanh have stable but slow learning curve and lowest accuracy.)
-
-[//]: # ()
-[//]: # (#### Table of results due to changing the Dropout rate:)
-
-[//]: # ( Parameters	  |    Test accuracy    )
-
-[//]: # (:------------:|:-------------------:)
-
-[//]: # (Dropout = .1  | 0.7912 )
-
-[//]: # (Dropout = .4  | 0.7735)
-
-[//]: # (Dropout = .7  | 0.7605)
-
-[//]: # ()
-[//]: # (- Increasing the dropout reducing the model accuracy.)
-
-[//]: # (From the above results we can conclude increasing the dropout rate has the following effects:)
-
-[//]: # (  - Makes the training process more stable and reducing the oscillations)
-
-[//]: # (  - Reduce the over fitting)
-
-[//]: # (  - High drop rate may cause reduce in the overall accuracies)
 
 ### Comparing the Models performance:
 
