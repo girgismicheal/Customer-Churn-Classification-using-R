@@ -87,92 +87,96 @@ churn.data
 ![Customer-churn-Image](Image/Screenshot_1.png)
 ### Check the correction
 
-#### The scatterplot matrix
-```{r}
-Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
-  dplyr::select (TotalCharges, MonthlyCharges, tenure) %>%
-  plot()
-```
-![Customer-churn-Image](Image/Screenshot_2.png)
-Scatterplot and heat map shows:
-1- high positive correlation between Totalcharges & tenure and equal .83
-2- high positive correlation between TotalCharges & MonthlyCharges and equal .65
-3- low positive correlation between tenure& MonthlyCharges and equal .25
-#### The correlation matrix
-```{r}
-Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
-  dplyr::select (TotalCharges, MonthlyCharges, tenure) %>%
-  cor() %>%
-  corrplot.mixed(upper = "ellipse", tl.col = "black", number.cex = 0.9)
-```
-![Customer-churn-Image](Image/Screenshot_3.png)
-
-#### Heat Maps plot
-```{r}
-subset(as.matrix(Filter(is.numeric, na.exclude(distinct(churn.data)))), select = c(TotalCharges,MonthlyCharges, tenure)) %>% cor() %>% heatmap()
-```
-![Customer-churn-Image](Image/Screenshot_4.png)
+> #### The scatterplot matrix
+> ```{r}
+> Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
+>   dplyr::select (TotalCharges, MonthlyCharges, tenure) %>%
+>   plot()
+> ```
+> ![Customer-churn-Image](Image/Screenshot_2.png)
+> 
+> #### The correlation matrix
+> ```{r}
+> Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
+>   dplyr::select (TotalCharges, MonthlyCharges, tenure) %>%
+>   cor() %>%
+>   corrplot.mixed(upper = "ellipse", tl.col = "black", number.cex = 0.9)
+> ```
+> ![Customer-churn-Image](Image/Screenshot_3.png)
+> 
+> #### Heat Maps plot
+> ```{r}
+> subset(as.matrix(Filter(is.numeric, na.exclude(distinct(churn.data)))), select = c(TotalCharges,MonthlyCharges, tenure)) %>% cor() %>% heatmap()
+> ```
+> ![Customer-churn-Image](Image/Screenshot_4.png)
+> 
+> Scatterplot and heat map shows:<br>
+>   - high positive correlation between Totalcharges & tenure and equal .83<br>
+>   - high positive correlation between TotalCharges & MonthlyCharges and equal .65<br>
+>   - low positive correlation between tenure& MonthlyCharges and equal .25<br>
 
 ### Data Preparation
-#### Remove the customerID
-```{r}
-data <- data.frame(churn.data)
-data$customerID <- NULL
-```
-#### Check duplicates and Nulls in the data
-```{r}
-cat("\nThe number of duplicates in the data ",sum(duplicated(data)))
-cat("\nThe number of nulls in the data ", sum(is.na(data)))
-```
-- The number of duplicates in the data  22
-- The number of nulls in the data  11
-#### Remove Nulls and Duplicates
-```{r}
-data <- na.exclude(data) 
-data <- distinct(data)
-
-cat("\nThe number of raws before ",nrow(churn.data))
-cat("\nThe number of raw after ",nrow(data))
-```
-- The number of raws before  7043
-- The number of raw after  7010
-#### Transfer the tenure from number of months to years
-```{r}
-table(data$tenure)
-```
-![Customer-churn-Image](Image/Screenshot_5.png)
-
-```{r}
-data %>%
-  mutate(tenure_year = case_when(tenure <= 12 ~ "0-1 year",
-                                 tenure > 12 & tenure <= 24 ~ "1-2 years",
-                                 tenure > 24 & tenure <= 36 ~ "2-3 years",
-                                 tenure > 36 & tenure <= 48 ~ "3-4 years",
-                                 tenure > 48 & tenure <= 60 ~ "4-5 years",
-                                 tenure > 60 & tenure <= 72 ~ "5-6 years")) -> data
-data$tenure <-NULL # remove tenure
-table(data$tenure_year)
-```
-![Customer-churn-Image](Image/Screenshot_6.png)
-
-#### Convert categorical to factor (numerical)
-```{r}
-cat("\nThe features before converting",str(data))
-```
-![Customer-churn-Image](Image/Screenshot_7.png)
-```{r}
-data %>% mutate_if(is.character, as.factor) -> data
-cat("\nThe features after converting",str(data))
-```
-![Customer-churn-Image](Image/Screenshot_8.png)
-#### Split the data into 80% for training and 20% for testing.
-```{r}
-set.seed(0)
-tree <- sample(0:1, size= nrow(data), prob = c(0.8,.2), replace = TRUE)
-train_data <- data[tree == 0, ]
-test_data <- data[tree == 1, ]
-dim(train_data); dim(test_data)
-```
+> #### Remove the customerID
+> ```{r}
+> data <- data.frame(churn.data)
+> data$customerID <- NULL
+> ```
+> #### Check duplicates and Nulls in the data
+> ```{r}
+> cat("\nThe number of duplicates in the data ",sum(duplicated(data)))
+> cat("\nThe number of nulls in the data ", sum(is.na(data)))
+> ```
+> - The number of duplicates in the data  22
+> - The number of nulls in the data  11
+> #### Remove Nulls and Duplicates
+> ```{r}
+> data <- na.exclude(data) 
+> data <- distinct(data)
+> 
+> cat("\nThe number of raws before ",nrow(churn.data))
+> cat("\nThe number of raw after ",nrow(data))
+> ```
+> - The number of raws before  7043
+> - The number of raw after  7010
+> #### Transfer the tenure from number of months to years
+> 
+> ```{r}
+> table(data$tenure)
+> ```
+> ![Customer-churn-Image](Image/Screenshot_5.png)
+> 
+> ```{r}
+> data %>%
+>   mutate(tenure_year = case_when(tenure <= 12 ~ "0-1 year",
+>                                  tenure > 12 & tenure <= 24 ~ "1-2 years",
+>                                  tenure > 24 & tenure <= 36 ~ "2-3 years",
+>                                  tenure > 36 & tenure <= 48 ~ "3-4 years",
+>                                  tenure > 48 & tenure <= 60 ~ "4-5 years",
+>                                  tenure > 60 & tenure <= 72 ~ "5-6 years")) -> data
+> data$tenure <-NULL # remove tenure
+> table(data$tenure_year)
+> ```
+> ![Customer-churn-Image](Image/Screenshot_6.png)
+> - Applied some feature engineering on the tenure feature. I have converted the “tenure” feature
+> from numbers to categories to represent the years instead of the number of months.
+> #### Convert categorical to factor (numerical)
+> ```{r}
+> cat("\nThe features before converting",str(data))
+> ```
+> ![Customer-churn-Image](Image/Screenshot_7.png)
+> ```{r}
+> data %>% mutate_if(is.character, as.factor) -> data
+> cat("\nThe features after converting",str(data))
+> ```
+> ![Customer-churn-Image](Image/Screenshot_8.png)
+> #### Split the data into 80% for training and 20% for testing.
+> ```{r}
+> set.seed(0)
+> tree <- sample(0:1, size= nrow(data), prob = c(0.8,.2), replace = TRUE)
+> train_data <- data[tree == 0, ]
+> test_data <- data[tree == 1, ]
+> dim(train_data); dim(test_data)
+> ```
 
 ### Decision
 #### Plot the decision trees
@@ -198,7 +202,7 @@ print('the confusion matrix of the decision tree with Gini on the training set')
 print(confusionMatrix(data = train_pred_gini,mode = "everything", reference = train_data$Churn))
 roc <- roc(train_actual, train_prob_gini[,2], plot= TRUE, print.auc=TRUE,main ="ROC Decision Tree for Training set with Gini splitting")
 ```
-Confusion Matrix             |  ROC Curve
+Confusion Matrix           |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_10.png)|  ![Customer-churn-Image](Image/Screenshot_11.png)
 
@@ -212,7 +216,7 @@ print('the confusion matrix of the decision tree with Gini on the testing set')
 print(confusionMatrix(data = test_pred_gini,mode = "everything", reference = test_data$Churn))
 roc <- roc(test_actual, test_prob_gini[,2], plot = TRUE, print.auc = TRUE,main ="ROC Decision Tree for Testing set with Gini splitting")
 ```
-Confusion Matrix             |  ROC Curve
+Confusion Matrix           |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_12.png)|  ![Customer-churn-Image](Image/Screenshot_13.png)
 
