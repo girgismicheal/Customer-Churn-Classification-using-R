@@ -1,74 +1,41 @@
 ```{r}
 # install packages just of the first run
-set.seed(42)
-
-install.packages("caret")
-install.packages("e1071")
-install.packages("dplyr")
-install.packages("tidyr")
-install.packages("readr")
-install.packages("corrplot")
-install.packages("ggplot2")
-install.packages("MASS")
-install.packages("rms")
-install.packages("ggpubr")
-install.packages("gplots")
-# Random Forest
-install.packages("randomForest")
-
-# Decision tree
-install.packages("rpart")
-install.packages("rpart.plot")
-
-# Xgboost
-install.packages("xgboost")
-
-# Neural Network
-install.packages("tensorflow")
-install_tensorflow()
-install.packages('reticulate')
-install.packages('keras')
-
-#ROC curve
-install.packages("ROCR")
-install.packages("pROC")
+# set.seed(42)
+# 
+# install.packages("caret")
+# install.packages("e1071")
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("readr")
+# install.packages("corrplot")
+# install.packages("ggplot2")
+# install.packages("MASS")
+# install.packages("rms")
+# install.packages("ggpubr")
+# install.packages("gplots")
+# # Random Forest
+# install.packages("randomForest")
+# 
+# # Decision tree
+# install.packages("rpart")
+# install.packages("rpart.plot")
+# 
+# # Xgboost
+# install.packages("xgboost")
+# 
+# # Neural Network
+# install.packages("tensorflow")
+# install_tensorflow()
+# install.packages('reticulate')
+# install.packages('keras')
+# 
+# #ROC curve
+# install.packages("ROCR")
+# install.packages("pROC")
 ```
 ```{r}
-library(dplyr)
-library(caret)
-library(e1071)
-library(dplyr)
-library(tidyr)
-library(tidyverse)
-library(readr)
-library(corrplot)
-library(ggplot2)
-library(MASS)
-library(rms)
-library(ggpubr)
-library(gplots)
-library(reshape2)
-library(plyr)
-library(scales)
-
-# Random Forest
-library(randomForest)
-
-# Decision tree
-library(rpart)
-library(rpart.plot)
-
-# Xgboost
-library(xgboost)
-
-# Neural Network
-library('tensorflow')
-library(reticulate)
+library(tensorflow)
 library(keras)
-
-#ROC curve
-library(ROCR)
-library(pROC)
 ```
 
 

@@ -10,19 +10,32 @@ data from a telecom company’s database. Develop ML models that can help
 the retention team predict high-risk churn customers before they leave
 
 ## Table of Contents
-- [Usage](#Usage)
-  - [Install](#Install)
-  - [Import the project file](#Import-the-project-file)
-  - [Train on the environment](#Train-on-the-environment)
-  - [Train and Evaluate](#Train-and-Evaluate)
-    - [Train and Evaluate on the Taxi-v3 environment](#Train-and-Evaluate-on-the-Taxi-v3-environment)
-    - [Train and Evaluate on the FrozenLake-v1 environment](#Train-and-Evaluate-on-the-FrozenLake-v1-environment)
-  - [Tuning the Parameters using Decay Over Episodes Technique](#Tuning-the-Parameters-using-Decay-Over-Episodes-Technique)
-    - [Tuning on the Taxi-v3 environment](#Tuning-on-the-Taxi-v3-environment)
-    - [Tuning on the FrozenLake-v1 environment](#Tuning-on-the-FrozenLake-v1-environment)
-  - [Use the Grid Search](#Use-the-Grid-Search)
-    - [On the Taxi-v3 environment](#On-the-Taxi-v3-environment)
-    - [On the FrozenLake-v1 environment](#On-the-FrozenLake-v1-environment)
+
+[//]: # (- [Usage]&#40;#Usage&#41;)
+
+[//]: # (  - [Install]&#40;#Install&#41;)
+
+[//]: # (  - [Import the project file]&#40;#Import-the-project-file&#41;)
+
+[//]: # (  - [Train on the environment]&#40;#Train-on-the-environment&#41;)
+
+[//]: # (  - [Train and Evaluate]&#40;#Train-and-Evaluate&#41;)
+
+[//]: # (    - [Train and Evaluate on the Taxi-v3 environment]&#40;#Train-and-Evaluate-on-the-Taxi-v3-environment&#41;)
+
+[//]: # (    - [Train and Evaluate on the FrozenLake-v1 environment]&#40;#Train-and-Evaluate-on-the-FrozenLake-v1-environment&#41;)
+
+[//]: # (  - [Tuning the Parameters using Decay Over Episodes Technique]&#40;#Tuning-the-Parameters-using-Decay-Over-Episodes-Technique&#41;)
+
+[//]: # (    - [Tuning on the Taxi-v3 environment]&#40;#Tuning-on-the-Taxi-v3-environment&#41;)
+
+[//]: # (    - [Tuning on the FrozenLake-v1 environment]&#40;#Tuning-on-the-FrozenLake-v1-environment&#41;)
+
+[//]: # (  - [Use the Grid Search]&#40;#Use-the-Grid-Search&#41;)
+
+[//]: # (    - [On the Taxi-v3 environment]&#40;#On-the-Taxi-v3-environment&#41;)
+
+[//]: # (    - [On the FrozenLake-v1 environment]&#40;#On-the-FrozenLake-v1-environment&#41;)
 
 
 ## Project structure
