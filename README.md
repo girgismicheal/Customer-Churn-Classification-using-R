@@ -9,7 +9,7 @@ are hereby provided with the churn dataset containing randomly collected
 data from a telecom company’s database. Develop ML models that can help 
 the retention team predict high-risk churn customers before they leave
 
-## Table of Contents
+[//]: # (## Table of Contents)
 
 [//]: # (- [Usage]&#40;#Usage&#41;)
 
