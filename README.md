@@ -184,8 +184,12 @@ churn.data
 rpart.plot(rpart(formula = Churn ~., data = train_data, 
                      method = "class", parms = list(split = "gini")), extra = 100)
 ```
-![Customer-churn-Image](Image/Screenshot_9.png)
-
+![Customer-churn-Image](Image/Screenshot_9.png)<br>
+> - After fit and plotting the decision tree, the result shows:
+>   - If the customer contract one or two year then the prediction would be No churn
+>   - Else we would check the internet service if has DSL or No then No churn.
+>   - Else we check the TotalCharges if greater than 1317 then no churn.
+>   - Else the prediction would be churn.
 #### Using different splitting strategies
 ##### Decision Tree using Gini
 ```{r}
