@@ -682,9 +682,9 @@ Dropout = .7  | 0.7605
 
 - Increasing the dropout reducing the model accuracy.
 From the above results we can conclude increasing the dropout rate has the following effects:
-  - Makes the training process more staple and reducing the oscillations
-  - Reduce the overfitting
-  - High drop rete may cause reduce in the overall accuracies
+  - Makes the training process more stable and reducing the oscillations
+  - Reduce the over fitting
+  - High drop rate may cause reduce in the overall accuracies
 
 ### Comparing the Models performance:
 
