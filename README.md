@@ -446,7 +446,7 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_37.png)| ![Customer-churn-Image](Image/Screenshot_38.png)
 
-> Note: The XGBoost training accuracy is 84.06% and the testing accuracy is 80.07%, which is not a huge
+> **Note:** The XGBoost training accuracy is 84.06% and the testing accuracy is 80.07%, which is not a huge
 > difference in the accuracy so we can say it’s a slight overfitting. and the sign of overfitting there are 4%
 >difference between the train and testing accuracies.
 ## Neural Network
