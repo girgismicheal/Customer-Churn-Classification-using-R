@@ -211,6 +211,7 @@ rpart.plot(rpart(formula = Churn ~., data = train_data,
 >   - Else we would check the internet service if the customer has DSL or No then-No churn.
 >   - Else we check the TotalCharges if greater than 1317 then no churn.
 >   - Else the prediction would be churn.
+
 #### Using different splitting strategies
 ##### Decision Tree using Gini
 ```{r}
@@ -453,7 +454,7 @@ Parameters	| Train accuracy	 | Test accuracy
 cp = 0 |	0.8619|	0.7517
 cp = 0.01 (default)|	0.7894|	0.7905
 cp = 0.001|	0.8493	|0.7823
-- Cp = 0 suffer toughly from over-fitting
+- Cp = 0 suffers roughly from overfitting
 
 ##### Change the maxdepth
 
@@ -462,7 +463,7 @@ Parameters	| Train accuracy	 | Test accuracy
 maxdepth = 3 (default)|	0.7894	|0.7905
 maxdepth = 2|	0.7603|	0.7694
 
-- Pruning reduces the complexity of the tree and reduces the over-fitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
+- Pruning reduces the complexity of the tree and reduces the over-fitting. But not improves the overall accuracy. After trying to prune the model its accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
 
 ## Xgboost
 ```{r}
@@ -596,7 +597,7 @@ print(confusionMatrix(table(test_actual, DNN_test_pred),mode = "everything"))
 Relu  | 0.7966
 Selu  | 0.7898
 Tanh  | 0.7796
--	Relu has the highest accuracy, but it’s not a big difference. Also tanh have stable but slow learning curve and lowest accuracy.
+-	Relu has the highest accuracy, but it’s not a big difference. Also, tanh has a stable but the slow learning curve and the lowest accuracy.
 
 ### Build DNN using keras with 3 dense layers and relu activation function with adding dropout layer =.1
 ```{r}
@@ -695,15 +696,14 @@ Dropout = .1  | 0.7912
 Dropout = .4  | 0.7735
 Dropout = .7  | 0.7605
 
-- Increasing the dropout reducing the model accuracy.
-From the above results we can conclude increasing the dropout rate has the following effects:
-  - Makes the training process more stable and reducing the oscillations
-  - Reduce the over fitting
-  - High drop rate may cause reduce in the overall accuracies
+- Increasing the dropout reduces the model accuracy.
+From the above results, we can conclude increasing the dropout rate has the following effects:
+  - Makes the training process more stable and reduces the oscillations
+  - Reduce the overfitting
+  - High drop rate may cause reduction in the overall accuracies
 
 
-
-### Comparing the Models performance:
+## Comparing the Models Performance:
 
 Criteria / Model	  | Decision tree | 	XGBoost | 	Neural networks	 |  Best 	  | Worst   
 :------------:|:-------------:|:--------:|:-----------------:|:--------:|:-------------------:|
@@ -711,3 +711,5 @@ Precision|    	0.7983    | 	0.8307  |      	0.941       |   	NN    |	DT
 Recall|   	0.9457     | 	0.9058  |       	0.81       |   	DT    |	NN
 Fmeasure|   	0.865853   | 	0.8666	 |      0.8705	      |    NN    |	DT
 Accuracy|    	0.7905    | 	0.8007  |   	0.8	| XGBoost	 |DT
+
+- The table has two columns that show the best and worst models in each classification metric.
