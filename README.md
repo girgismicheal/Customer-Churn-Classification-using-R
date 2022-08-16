@@ -415,6 +415,34 @@ Confusion Matrix             |  ROC Curve
 :-------------------------:|:-------------------------:
 ![Customer-churn-Image](Image/Screenshot_33.png)|![Customer-churn-Image](Image/Screenshot_34.png)
 
+### Decision Conclusion
+
+**Different splitting strategies**
+
+Parameters	| Train accuracy	 | Test accuracy
+:-------------------------:|:---------------:|:-------------------------:
+Split = ”gini”	|     0.7894	     |0.7905
+Split = ”information”|    	0.7894	     | 0.7905
+- There is no difference with changing the splitting strategies only.
+
+Change the cp
+
+Parameters	| Train accuracy	 | Test accuracy
+:-------------------------:|:---------------:|:-------------------------:
+cp = 0 |	0.8619|	0.7517
+cp = 0.01 (default)|	0.7894|	0.7905
+cp = 0.001|	0.8493	|0.7823
+- Cp = 0 suffer toghly from overfitting
+- 
+Change the maxdepth
+
+Parameters	| Train accuracy	 | Test accuracy
+:-------------------------:|:---------------:|:-------------------------:
+maxdepth = 3 (default)|	0.7894	|0.7905
+maxdepth = 2|	0.7603|	0.7694
+
+- Pruning reduces the complexity of the tree and reduces the overfitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
+
 ## xgboost
 ```{r}
 set.seed(42)
@@ -541,6 +569,14 @@ print('Testing confusion matrix tanh activation function')
 print(confusionMatrix(table(test_actual, DNN_test_pred),mode = "everything"))
 ```
 
+#### Table of results due to changing the activation function
+ Parameters	  |    Test accuracy    
+:------------:|:-------------------:
+Relu  | 0.7966
+Selu  | 0.7898
+Tanh  | 0.7796
+-	Relu has the highest accuracy, but it’s not a big difference. Also tanh have stable but slow learning curve and lowest accuracy.
+
 ### Build DNN using keras with 3 dense layers and relu activation function with adding dropout layer =.1
 ```{r}
 set.seed(42)
@@ -631,48 +667,6 @@ print('Testing confusion matrix for relu activation function with .7 dorpout')
 print(confusionMatrix(table(test_actual, DNN_test_pred),mode = "everything"))
 ```
 
-
-## Conclusion
-### Decsion tree
-
-Using different splitting strategies
-
-Parameters	| Train accuracy	 | Test accuracy
-:-------------------------:|:---------------:|:-------------------------:
-Split = ”gini”	|     0.7894	     |0.7905
-Split = ”information”|    	0.7894	     | 0.7905
-- There is no difference with changing the splitting strategies only.
-
-Change the cp
-
-Parameters	| Train accuracy	 | Test accuracy
-:-------------------------:|:---------------:|:-------------------------:
-cp = 0 |	0.8619|	0.7517
-cp = 0.01 (default)|	0.7894|	0.7905
-cp = 0.001|	0.8493	|0.7823
-
-Change the maxdepth
-
-Parameters	| Train accuracy	 | Test accuracy
-:-------------------------:|:---------------:|:-------------------------:
-maxdepth = 3 (default)|	0.7894	|0.7905
-maxdepth = 2|	0.7603|	0.7694
-- Pruning reduces the complexity of the tree and reduces the overfitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.
-
-### Xgboost
-The XGBoost training accuracy is 84.06% and the testing accuracy is 80.07%, which is not a huge difference in the accuracy so we can say it’s slight overfitting. and the sign of overfitting there is 4% difference between the train and testing accuracies.
-
-### DNN
-
-#### Table of results due to changing the activation function
- Parameters	  |    Test accuracy    
-:------------:|:-------------------:
-Relu  | 0.7966
-Selu  | 0.7898
-Tanh  | 0.7796
-
--	Relu has the highest accuracy, but it’s not a big difference. Also tanh have stable but slow learning curve and lowest accuracy.
-
 #### Table of results due to changing the Dropout rate:
  Parameters	  |    Test accuracy    
 :------------:|:-------------------:
@@ -686,9 +680,98 @@ From the above results we can conclude increasing the dropout rate has the follo
   - Reduce the over fitting
   - High drop rate may cause reduce in the overall accuracies
 
+
+## Conclusion
+### Decision tree
+
+[//]: # (Using different splitting strategies)
+
+[//]: # ()
+[//]: # (Parameters	| Train accuracy	 | Test accuracy)
+
+[//]: # (:-------------------------:|:---------------:|:-------------------------:)
+
+[//]: # (Split = ”gini”	|     0.7894	     |0.7905)
+
+[//]: # (Split = ”information”|    	0.7894	     | 0.7905)
+
+[//]: # (- There is no difference with changing the splitting strategies only.)
+
+[//]: # ()
+[//]: # (Change the cp)
+
+[//]: # ()
+[//]: # (Parameters	| Train accuracy	 | Test accuracy)
+
+[//]: # (:-------------------------:|:---------------:|:-------------------------:)
+
+[//]: # (cp = 0 |	0.8619|	0.7517)
+
+[//]: # (cp = 0.01 &#40;default&#41;|	0.7894|	0.7905)
+
+[//]: # (cp = 0.001|	0.8493	|0.7823)
+
+[//]: # ()
+[//]: # (Change the maxdepth)
+
+[//]: # ()
+[//]: # (Parameters	| Train accuracy	 | Test accuracy)
+
+[//]: # (:-------------------------:|:---------------:|:-------------------------:)
+
+[//]: # (maxdepth = 3 &#40;default&#41;|	0.7894	|0.7905)
+
+[//]: # (maxdepth = 2|	0.7603|	0.7694)
+
+[//]: # (- Pruning reduces the complexity of the tree and reduces the overfitting. But not improves the overall accuracy. After trying to prune the model it’s accuracy dropped from .794 to 0.768 by changing the cp to be “.1”.)
+
+[//]: # (### Xgboost)
+
+[//]: # (The XGBoost training accuracy is 84.06% and the testing accuracy is 80.07%, which is not a huge difference in the accuracy so we can say it’s slight overfitting. and the sign of overfitting there is 4% difference between the train and testing accuracies.)
+
+[//]: # (### DNN)
+
+[//]: # ()
+[//]: # (#### Table of results due to changing the activation function)
+
+[//]: # ( Parameters	  |    Test accuracy    )
+
+[//]: # (:------------:|:-------------------:)
+
+[//]: # (Relu  | 0.7966)
+
+[//]: # (Selu  | 0.7898)
+
+[//]: # (Tanh  | 0.7796)
+
+[//]: # (-	Relu has the highest accuracy, but it’s not a big difference. Also tanh have stable but slow learning curve and lowest accuracy.)
+
+[//]: # ()
+[//]: # (#### Table of results due to changing the Dropout rate:)
+
+[//]: # ( Parameters	  |    Test accuracy    )
+
+[//]: # (:------------:|:-------------------:)
+
+[//]: # (Dropout = .1  | 0.7912 )
+
+[//]: # (Dropout = .4  | 0.7735)
+
+[//]: # (Dropout = .7  | 0.7605)
+
+[//]: # ()
+[//]: # (- Increasing the dropout reducing the model accuracy.)
+
+[//]: # (From the above results we can conclude increasing the dropout rate has the following effects:)
+
+[//]: # (  - Makes the training process more stable and reducing the oscillations)
+
+[//]: # (  - Reduce the over fitting)
+
+[//]: # (  - High drop rate may cause reduce in the overall accuracies)
+
 ### Comparing the Models performance:
 
-	
 Criteria / Model	  | Decision tree | 	XGBoost | 	Neural networks	 |  Best 	  | Worst   
 :------------:|:-------------:|:--------:|:-----------------:|:--------:|:-------------------:|
 Precision|    	0.7983    | 	0.8307  |      	0.941       |   	NN    |	DT
