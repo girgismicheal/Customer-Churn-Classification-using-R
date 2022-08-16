@@ -81,7 +81,7 @@ library(pROC)
 
 ```{r}
 # Load Our data
-churn.data <- read.csv("D:/Fandumental Datascience Assignment 2/Churn Dataset.csv", na.strings= '')
+churn.data <- read.csv("Churn Dataset.csv", na.strings= '')
 churn.data
 ```
 ![Customer-churn-Image](Image/Screenshot_1.png)
@@ -94,8 +94,11 @@ Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
   plot()
 ```
 ![Customer-churn-Image](Image/Screenshot_2.png)
-
-#### correlation matrix
+Scatterplot and heat map shows:
+1- high positive correlation between Totalcharges & tenure and equal .83
+2- high positive correlation between TotalCharges & MonthlyCharges and equal .65
+3- low positive correlation between tenure& MonthlyCharges and equal .25
+#### The correlation matrix
 ```{r}
 Filter(is.numeric, na.exclude(distinct(churn.data))) %>%
   dplyr::select (TotalCharges, MonthlyCharges, tenure) %>%
